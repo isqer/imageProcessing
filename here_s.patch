@@ -1,0 +1,23 @@
+Index: .idea/vcs.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- .idea/vcs.xml	(revision 5e61526809c1200f61e4225e36d8c7edaedcadca)
++++ .idea/vcs.xml	(revision 5e61526809c1200f61e4225e36d8c7edaedcadca)
+@@ -0,0 +1,6 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<project version="4">
++  <component name="VcsDirectoryMappings">
++    <mapping directory="$PROJECT_DIR$" vcs="Git" />
++  </component>
++</project>
+\ No newline at end of file
+Index: numpy1.py
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- numpy1.py	(revision 5e61526809c1200f61e4225e36d8c7edaedcadca)
++++ numpy1.py	(revision 5e61526809c1200f61e4225e36d8c7edaedcadca)
+@@ -0,0 +1,0 @@
