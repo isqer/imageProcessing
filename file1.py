@@ -71,6 +71,32 @@ class Operations:
             return picture[x1:x2,y1:y2]
         else:
             return picture[x1:x2,y1:y2,:]
+    
+    def flipImageHorizontally(self, picture):
+        if picture.ndim==2: return picture[:,:0:-1]
+        else: return picture[:,:0:-1,:]
+
+    def flipImageVertical(self, picture):
+        if picture.ndim==2: return picture[:0:-1,:]
+        else: return picture[:0:-1,:,:]
+
+    def rotateLeft(self,picture):
+        if picture.ndim==2:
+            result=picture[:,:]
+            result=np.rot90(result)
+            return result.astype("uint8")
+        elif picture.ndim==3:
+            result=np.zeros((picture.shape[0],picture.shape[1],picture.shape[2]))
+            result[:,:,0]=self.rotateLeft(picture[:,:,0])
+            result[:,:,1]=self.rotateLeft(picture[:,:,1])
+            result[:,:,2]=self.rotateLeft(picture[:,:,2])
+            return result.astype("uint8")
+
+    def rotateRight(self,picture):
+        return self.rotateLeft(self.rotateLeft(self.rotateLeft(picture)))   #HEHEHE
+
+
+
 
         
 
@@ -81,6 +107,7 @@ class Operations:
 
 flt = Filters()
 ops = Operations()
-newPic=ops.crop(flt.negativeFilter(flt.grayScaleHDR(img.imread("laura.tif"))),100,100,500,250)
+#newPic=ops.flipImageVertical(flt.negativeFilter(flt.grayScaleHDR(img.imread("laura.tif"))))
+newPic=ops.rotateRight(img.imread("laura.tif"))
 showImage(newPic)
 plt.show()
