@@ -23,9 +23,9 @@ def showImage(picture):
     else: plt.imshow(newPic, cmap=None) #dzięki temu nie musisz wybierać między cmap gray a None
 
 ############
-#
+# FILTERS
 ############
-class filters:
+class Filters:
     def __init__(self):
         pass        #jakis init musi byc
 
@@ -56,12 +56,31 @@ class filters:
         if picture.ndim==2: output=255-picture[:,:]
         else: output=255-picture[:,:,:]
         return output
+
+
+############
+# OPERATIONS
+############
+
+class Operations:
+    def __init__(self):
+        pass
+
+    def crop(self, picture, x1, y1, x2, y2):
+        if picture.ndim==2:
+            return picture[x1:x2,y1:y2]
+        else:
+            return picture[x1:x2,y1:y2,:]
+
+        
+
 ############
 # TESTS?
 ############
 
 
-flt = filters()
-newPic=flt.negativeFilter(img.imread("laura.tif"))
+flt = Filters()
+ops = Operations()
+newPic=ops.crop(flt.negativeFilter(flt.grayScaleHDR(img.imread("laura.tif"))),100,100,500,250)
 showImage(newPic)
 plt.show()
