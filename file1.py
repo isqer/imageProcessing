@@ -75,7 +75,7 @@ class Filters:
     def contrast(self,picture,value):
         if picture.ndim==2:
             out=np.zeros_like(picture,dtype="int16")
-            fact=(259*(value+255))/(255*(259-value))
+            fact=(256*(value+255))/(255*(256-value))
             for x in range(0,picture.shape[0]):
                 for y in range(0,picture.shape[1]):
                     out[x,y]=fact*(picture[x,y]-128)+128
@@ -192,7 +192,7 @@ sv=FileFormat()
 flt = Filters()
 ops = Operations()
 #newPic=ops.flipImageVertical(flt.negativeFilter(flt.grayScaleHDR(img.imread("laura.tif"))))
-newPic=flt.contrast((img.imread("laura.tif")),-128)
+newPic=flt.contrast((img.imread("laura.tif")),128)
 print(np.min(newPic))
 showImage(newPic)
 plt.show()
