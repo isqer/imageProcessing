@@ -63,8 +63,7 @@ class Filters:
             for x in range(0,picture.shape[0]):
                 for y in range(0,picture.shape[1]):
                     out[x,y]=picture[x,y]+value
-                    if out[x,y]>255:out[x,y]=255
-                    if out[x,y]<0:out[x,y]=0
+            np.clip(out,0,255)
             out=np.uint8(np.clip(out,0,255))
             return out
         elif picture.ndim==3:
@@ -72,6 +71,22 @@ class Filters:
             for x in range(0,picture.shape[2]):
                 out[:,:,x]=self.brightness(picture[:,:,x],value)
             return out
+
+    def contrast(self,picture,value):
+        if picture.ndim==2:
+            out=np.zeros_like(picture,dtype="int16")
+            fact=(259*(value+255))/(255*(259-value))
+            for x in range(0,picture.shape[0]):
+                for y in range(0,picture.shape[1]):
+                    out[x,y]=fact*(picture[x,y]-128)+128
+            out=np.clip(out,0,255)
+            return np.uint8(out)
+        elif picture.ndim==3:
+            out=np.zeros_like(picture,dtype=np.uint8)
+            for x in range (0,picture.shape[2]):
+                out[:,:,x]=self.contrast(picture[:,:,x],value)
+            return out
+
 
 
 ############
@@ -177,7 +192,7 @@ sv=FileFormat()
 flt = Filters()
 ops = Operations()
 #newPic=ops.flipImageVertical(flt.negativeFilter(flt.grayScaleHDR(img.imread("laura.tif"))))
-newPic=flt.brightness((img.imread("laura.tif")),-128)
+newPic=flt.contrast((img.imread("laura.tif")),-128)
 print(np.min(newPic))
 showImage(newPic)
 plt.show()
