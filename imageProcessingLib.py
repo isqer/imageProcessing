@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 ############
-# MISCC
+# MISC
 ############
 
 # wrzuci się do klasy później - musimy to omówić
