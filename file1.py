@@ -75,10 +75,12 @@ class Filters:
     def contrast(self,picture,value):
         if picture.ndim==2:
             out=np.zeros_like(picture,dtype="int16")
-            fact=(256*(value+255))/(255*(256-value))
+            picrange=256    #0    255    ==  256
+            picmaxval=255   #255 max
+            ratio=(picrange*(value+picmaxval))/(picmaxval*(picrange-value))
             for x in range(0,picture.shape[0]):
                 for y in range(0,picture.shape[1]):
-                    out[x,y]=fact*(picture[x,y]-128)+128
+                    out[x,y]=ratio*(picture[x,y]-(picrange/2))+(picrange/2)
             out=np.clip(out,0,255)
             return np.uint8(out)
         elif picture.ndim==3:
