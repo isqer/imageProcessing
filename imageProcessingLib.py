@@ -20,25 +20,23 @@ class Filters:
     def __init__(self):
         pass  # jakis init musi byc
 
-    def grayScaleNTSC(self, picture):  # zawsze musisz dac self
+    def arrayCreator(self, picture,param1,param2,param3):
         output = np.zeros((picture.shape[0], picture.shape[1]))  # czy z tego funkcje?
         for x in range(0, picture.shape[0]):
             for y in range(0, picture.shape[1]):
-                output[x, y] = 0.299 * picture[x, y, 0] + 0.587 * picture[x, y, 1] + 0.114 * picture[x, y, 2]
+                output[x, y] = param1 * picture[x, y, 0] + param2 * picture[x, y, 1] + param3 * picture[x, y, 2]
+        return output
+
+    def grayScaleNTSC(self, picture):  # zawsze musisz dac self
+        output=self.arrayCreator(picture,0.299,0.587,0.114)
         return output
 
     def grayScaleHDTV(self, picture):
-        output = np.zeros((picture.shape[0], picture.shape[1]))  # czy z tego funkcje?
-        for x in range(0, picture.shape[0]):
-            for y in range(0, picture.shape[1]):
-                output[x, y] = 0.2126 * picture[x, y, 0] + 0.7152 * picture[x, y, 1] + 0.0722 * picture[x, y, 2]
+        output=self.arrayCreator(picture,0.2126,0.7152,0.0722)
         return output
 
     def grayScaleHDR(self, picture):
-        output = np.zeros((picture.shape[0], picture.shape[1]))  # czy z tego funkcje?
-        for x in range(0, picture.shape[0]):
-            for y in range(0, picture.shape[1]):
-                output[x, y] = 0.2627 * picture[x, y, 0] + 0.6780 * picture[x, y, 1] + 0.0593 * picture[x, y, 2]
+        output=self.arrayCreator(picture,0.2627,0.6780,0.0593)
         return output
 
     def negativeFilter(self, picture):
@@ -48,21 +46,6 @@ class Filters:
         else:
             output = 255 - picture[:, :, :]
         return output
-
-    def brightness(self, picture, value):
-        if picture.ndim == 2:
-            out = np.zeros_like(picture, dtype='int16')
-            for x in range(0, picture.shape[0]):
-                for y in range(0, picture.shape[1]):
-                    out[x, y] = picture[x, y] + value
-            np.clip(out, 0, 255)
-            out = np.uint8(np.clip(out, 0, 255))
-            return out
-        elif picture.ndim == 3:
-            out = np.zeros_like(picture, dtype=np.uint8)
-            for x in range(0, picture.shape[2]):
-                out[:, :, x] = self.brightness(picture[:, :, x], value)
-            return out
 
 ############
 # OPERATIONS
