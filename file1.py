@@ -26,9 +26,6 @@ def showImage(picture):
         plt.imshow(newPic, cmap=None)  # dzięki temu nie musisz wybierać między cmap gray a None
 
 
-############
-# FILTERS
-############
 class Filters:
     def __init__(self):
         pass  # jakis init musi byc
